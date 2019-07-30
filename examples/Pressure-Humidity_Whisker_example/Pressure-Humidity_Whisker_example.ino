@@ -39,11 +39,11 @@ unsigned long delayTime = 1000;
 const int powerPin = 4;
 
 void setup() {
-  Serial.begin(9600); // Bandwidth for our communication
+  SerialUSB.begin(9600); // Bandwidth for our communication
   // Print to Serial Monitor
-  // You can pass flash-memory based strings to Serial.print() by wrapping them with F(). 
+  // You can pass flash-memory based strings to SerialUSB.print() by wrapping them with F(). 
   // This means you're using flash memory instead of RAM to print stuff
-  Serial.println(F("BME280 test"));
+  SerialUSB.println(F("BME280 test"));
 
   // We want to see Digital Output from the sensor
   pinMode(powerPin, OUTPUT);
@@ -69,12 +69,12 @@ void setup() {
   if (!bme.begin()) {
     display.setCursor(12, 12); 
     display.print("No Sensor!");  // Printed to TinyScreen
-    Serial.println("Could not find a valid BME280 sensor, check wiring!"); // Printed to Serial Monitor
+    SerialUSB.println("Could not find a valid BME280 sensor, check wiring!"); // Printed to Serial Monitor
     while (1); // loop forever, because the rest of the program means nothing without the sensor
   }
 
-  Serial.println("-- Default Test --");
-  Serial.println();
+  SerialUSB.println("-- Default Test --");
+  SerialUSB.println();
 }
 
 // Forever looping the following logic
@@ -86,23 +86,23 @@ void loop() {
 
 // This function prints out the values from the sensor to the Serial Monitor
 void printValues() {
-  Serial.print("Temperature = ");
-  Serial.print(bme.readTemperature());
-  Serial.println(" *C");
+  SerialUSB.print("Temperature = ");
+  SerialUSB.print(bme.readTemperature());
+  SerialUSB.println(" *C");
 
-  Serial.print("Pressure = ");
-  Serial.print(bme.readPressure() / 100.0F);
-  Serial.println(" hPa");
+  SerialUSB.print("Pressure = ");
+  SerialUSB.print(bme.readPressure() / 100.0F);
+  SerialUSB.println(" hPa");
 
-  Serial.print("Approx. Altitude = ");
-  Serial.print(bme.readAltitude(SEALEVELPRESSURE_HPA));
-  Serial.println(" m");
+  SerialUSB.print("Approx. Altitude = ");
+  SerialUSB.print(bme.readAltitude(SEALEVELPRESSURE_HPA));
+  SerialUSB.println(" m");
 
-  Serial.print("Humidity = ");
-  Serial.print(bme.readHumidity());
-  Serial.println(" %");
+  SerialUSB.print("Humidity = ");
+  SerialUSB.print(bme.readHumidity());
+  SerialUSB.println(" %");
 
-  Serial.println();
+  SerialUSB.println();
 }
 
 // This function prints out the values from the sensor to a TinyScreen screen
