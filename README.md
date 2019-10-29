@@ -1,7 +1,7 @@
-# TinyCircuits Whisker Pressure Humidity
+# TinyCircuits Wireling Pressure Humidity
 # AST1025 Rev2
 
-The design files are located under design_files/ for the TinyCircuits AST1025 Rev 2 PCB. This is a whisker board which features the Bosch BME280 Humidity, Pressure and Temperature Sensor all in one package! It measures between -40 and +85C, 0%-100% relative humidity, and from 300-1100hPa.
+The design files are located under design_files/ for the TinyCircuits AST1025 Rev 2 PCB. This is a Wireling board which features the Bosch BME280 Humidity, Pressure and Temperature Sensor all in one package! It measures between -40 and +85C, 0%-100% relative humidity, and from 300-1100hPa.
 
 Format is in Cadsoft Eagle format - Eagle version 6.2 was used for the original design.
 
