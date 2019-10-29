@@ -1,7 +1,8 @@
 /*************************************************************************
- * BME280 WhiskerBoard Tutorial: 
- * Print the temperature(C), altitude, pressure(hPa), and humidity(%) 
- * readings the BME280 sensor is capable of reading
+ * Pressure & Humidity Wireling Tutorial: 
+ * This program prints the temperature(C), altitude, pressure(hPa), and 
+ * humidity(%) readings from the BME280 sensor. Results will be printed
+ * to the Serial Monitor, or a TinyScreen+ screen if used.
  * 
  * Hardware by: TinyCircuits
  * BME280 Library by: Adafruit
@@ -38,12 +39,20 @@ unsigned long delayTime = 1000;
 // The power pin for our board, used for digitally writing to output
 const int powerPin = 4;
 
+// Make Serial Monitor compatible for all TinyCircuits processors
+#if defined(ARDUINO_ARCH_AVR)
+  #define SerialMonitorInterface Serial
+#elif defined(ARDUINO_ARCH_SAMD)
+  #define SerialMonitorInterface SerialUSB
+#endif
+
+
 void setup() {
-  SerialUSB.begin(9600); // Bandwidth for our communication
+  SerialMonitorInterface.begin(9600); // Bandwidth for our communication
   // Print to Serial Monitor
-  // You can pass flash-memory based strings to SerialUSB.print() by wrapping them with F(). 
+  // You can pass flash-memory based strings to SerialMonitorInterface.print() by wrapping them with F(). 
   // This means you're using flash memory instead of RAM to print stuff
-  SerialUSB.println(F("BME280 test"));
+  SerialMonitorInterface.println(F("BME280 test"));
 
   // We want to see Digital Output from the sensor
   pinMode(powerPin, OUTPUT);
@@ -69,12 +78,12 @@ void setup() {
   if (!bme.begin()) {
     display.setCursor(12, 12); 
     display.print("No Sensor!");  // Printed to TinyScreen
-    SerialUSB.println("Could not find a valid BME280 sensor, check wiring!"); // Printed to Serial Monitor
+    SerialMonitorInterface.println("Could not find a valid BME280 sensor, check wiring!"); // Printed to Serial Monitor
     while (1); // loop forever, because the rest of the program means nothing without the sensor
   }
 
-  SerialUSB.println("-- Default Test --");
-  SerialUSB.println();
+  SerialMonitorInterface.println("-- Default Test --");
+  SerialMonitorInterface.println();
 }
 
 // Forever looping the following logic
@@ -86,23 +95,23 @@ void loop() {
 
 // This function prints out the values from the sensor to the Serial Monitor
 void printValues() {
-  SerialUSB.print("Temperature = ");
-  SerialUSB.print(bme.readTemperature());
-  SerialUSB.println(" *C");
+  SerialMonitorInterface.print("Temperature = ");
+  SerialMonitorInterface.print(bme.readTemperature());
+  SerialMonitorInterface.println("°C");
 
-  SerialUSB.print("Pressure = ");
-  SerialUSB.print(bme.readPressure() / 100.0F);
-  SerialUSB.println(" hPa");
+  SerialMonitorInterface.print("Pressure = ");
+  SerialMonitorInterface.print(bme.readPressure() / 100.0F);
+  SerialMonitorInterface.println("hPa");
 
-  SerialUSB.print("Approx. Altitude = ");
-  SerialUSB.print(bme.readAltitude(SEALEVELPRESSURE_HPA));
-  SerialUSB.println(" m");
+  SerialMonitorInterface.print("Approx. Altitude = ");
+  SerialMonitorInterface.print(bme.readAltitude(SEALEVELPRESSURE_HPA));
+  SerialMonitorInterface.println("m");
 
-  SerialUSB.print("Humidity = ");
-  SerialUSB.print(bme.readHumidity());
-  SerialUSB.println(" %");
+  SerialMonitorInterface.print("Humidity = ");
+  SerialMonitorInterface.print(bme.readHumidity());
+  SerialMonitorInterface.println("%");
 
-  SerialUSB.println();
+  SerialMonitorInterface.println();
 }
 
 // This function prints out the values from the sensor to a TinyScreen screen
@@ -118,19 +127,19 @@ void printScreen() {
   display.println(" hPa");
 
   display.setCursor(0, 36);
-  display.print(" Alt: ");
+  display.print("Alt: ");
   display.print(bme.readAltitude(SEALEVELPRESSURE_HPA));
   display.println(" m");
 
   display.setCursor(0, 48);
-  display.print(" Hum: ");
+  display.print("Hum: ");
   display.print(bme.readHumidity());
   display.println(" %");
 
   display.println();
 }
 
-// **This function is necessary for all Whisker boards attached through an Adapter board**
+// **This function is necessary for all Wireling boards attached through an Adapter board**
 // Selects the correct address of the port being used in the Adapter board
 void selectPort(int port) {
   Wire.beginTransmission(0x70); //I2C
