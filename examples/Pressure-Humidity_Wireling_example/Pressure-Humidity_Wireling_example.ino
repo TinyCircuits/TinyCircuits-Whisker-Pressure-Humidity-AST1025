@@ -79,7 +79,7 @@ void setup() {
     display.setCursor(12, 12); 
     display.print("No Sensor!");  // Printed to TinyScreen
     SerialMonitorInterface.println("Could not find a valid BME280 sensor, check wiring!"); // Printed to Serial Monitor
-    while (1); // loop forever, because the rest of the program means nothing without the sensor
+//    while (1); // loop forever, because the rest of the program means nothing without the sensor
   }
 
   SerialMonitorInterface.println("-- Default Test --");
