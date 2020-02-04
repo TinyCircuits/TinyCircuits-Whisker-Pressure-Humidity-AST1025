@@ -104,6 +104,7 @@ void Adafruit_BME280::setSampling(sensor_mode       mode,
     @brief  Encapsulate hardware and software SPI transfer into one function
 */
 /**************************************************************************/
+/*
 uint8_t Adafruit_BME280::spixfer(uint8_t x) {
   // hardware SPI
   if (_sck == -1)
@@ -120,7 +121,7 @@ uint8_t Adafruit_BME280::spixfer(uint8_t x) {
       reply |= 1;
   }
   return reply;
-}
+}*/
 
 
 /**************************************************************************/
